@@ -1,12 +1,3 @@
-*
-
-!src/
-!docs/
-
-!src/**
-!docs/**
-
-!.gitignore
-!README.md
-!LICENSE
-!pom.xml
+demo/target/
+.idea
+.vscode
