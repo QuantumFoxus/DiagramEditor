@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="MainPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: Orange;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qfox.diagrameditor.app.MainController">
+
+    <!-- left panel -->
+    <left>
+        <VBox alignment="BOTTOM_CENTER" prefHeight="1019.0" prefWidth="320.0" spacing="10.0" style="-fx-background-color: #00519dff;">
+
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+
+            <!-- add elements-->
+            <Accordion fx:id="elementsAccordion">
+                <panes>
+
+                    <TitledPane animated="false" text="Блоки">
+                        <content>
+                            <ScrollPane fitToWidth="true">
+                                <content>
+                                    <VBox fx:id="blocksContainer" spacing="5" />
+                                </content>
+                            </ScrollPane>
+                        </content>
+                    </TitledPane>
+
+                    <TitledPane animated="false" text="Связи">
+                        <content>
+                            <ScrollPane fitToWidth="true">
+                                <content>
+                                    <VBox fx:id="linesContainer" spacing="5" />
+                                </content>
+                            </ScrollPane>
+                        </content>
+                    </TitledPane>
+
+                    <TitledPane animated="false" text="Прочее">
+                        <content>
+                            <ScrollPane fitToWidth="true">
+                                <content>
+                                    <VBox fx:id="otherContainer" spacing="5" />
+                                </content>
+                            </ScrollPane>
+                        </content>
+                    </TitledPane>
+
+                </panes>
+            </Accordion>
+
+            <!-- element parameters -->
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Параметры элемента" />
+
+            <ScrollPane fx:id="propertiesPane" fitToWidth="true" prefHeight="492.0" prefWidth="300.0">
+                <content>
+                    <VBox fx:id="propertiesContainer" spacing="8" />
+                </content>
+            </ScrollPane>
+
+        </VBox>
+    </left>
+
+    <!-- canvas -->
+    <center>
+        <ScrollPane fx:id="canvasScroll" fitToHeight="false" fitToWidth="false" pannable="true">
+            <content>
+                <Pane fx:id="canvasPane" prefHeight="9000" prefWidth="9000" style="-fx-background-color: white; -fx-border-color: black;" />
+            </content>
+        </ScrollPane>
+    </center>
+
+    <!-- bottom panel -->
+    <bottom>
+        <VBox spacing="8" style="-fx-background-color: #00519dff;">
+            <padding>
+                <Insets bottom="8" left="10" right="10" top="8" />
+            </padding>
+
+            <HBox alignment="TOP_RIGHT" spacing="10">
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="91.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Шаг сетки:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                      <Spinner fx:id="GridSizeSpinner" editable="true" prefHeight="25.0" prefWidth="65.0" />
+               </children>
+            </HBox>
+                <Button onAction="#onDeleteClicked" text="Удалить" />
+                <Button onAction="#onUndoClicked" text="Отменить" />
+                <Button onAction="#onRedoClicked" text="Вернуть" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Button onAction="#onSaveClicked" text="Сохранить" />
+                <Button onAction="#onLoadClicked" text="Загрузить" />
+                <Button onAction="#onCreateClicked" text="Создать" />
+                <Button onAction="#onExportClicked" text="Экспорт в .png" />
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>
