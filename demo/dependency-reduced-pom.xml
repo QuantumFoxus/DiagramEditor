@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
+  <groupId>qfox.diagrameditor</groupId>
   <artifactId>demo</artifactId>
   <version>1.0-SNAPSHOT</version>
   <build>
@@ -11,14 +11,6 @@
         <version>3.11.0</version>
         <configuration>
           <release>${maven.compiler.release}</release>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>com.example.app.App</mainClass>
         </configuration>
       </plugin>
       <plugin>
@@ -33,25 +25,66 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.example.app.App</mainClass>
+                  <mainClass>${main.class}</mainClass>
                 </transformer>
               </transformers>
             </configuration>
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-jlink-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>make-runtime</id>
+            <goals>
+              <goal>jlink</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <launcher>DemoDiagramEditor=${main.class}</launcher>
+          <jlinkImageName>demo-runtime</jlinkImageName>
+          <addModules>java.base,java.desktop,java.logging,java.sql,
+                        javafx.base,javafx.graphics,javafx.controls,
+                        javafx.fxml,javafx.swing</addModules>
+          <jdkHome>${jdk.home}</jdkHome>
+          <compress>2</compress>
+          <stripDebug>true</stripDebug>
+          <outputDirectory>${project.build.directory}/jlink-image</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.panteleyev</groupId>
+        <artifactId>jpackage-maven-plugin</artifactId>
+        <version>1.6.1</version>
+        <executions>
+          <execution>
+            <id>package-exe</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jpackage</goal>
+            </goals>
+            <configuration>
+              <type>exe</type>
+              <input>${project.build.directory}/jlink-image</input>
+              <name>DemoDiagramEditor</name>
+              <mainJar>${project.build.directory}/${project.build.finalName}-shaded.jar</mainJar>
+              <mainClass>${main.class}</mainClass>
+              <winConsole>false</winConsole>
+              <appVersion>${project.version}</appVersion>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo1.maven.org/maven2</url>
-    </repository>
-  </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>17</java.version>
     <maven.compiler.release>17</maven.compiler.release>
     <javafx.version>21.0.2</javafx.version>
+    <main.class>qfox.diagrameditor.app.App</main.class>
+    <jdk.home>C:\Program Files\Java\jdk-17.0.8</jdk.home>
   </properties>
 </project>
