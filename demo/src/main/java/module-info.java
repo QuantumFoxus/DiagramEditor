@@ -1,4 +1,4 @@
-module com.DiagramEditor {
+module qfox.DiagramEditor {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.swing;
