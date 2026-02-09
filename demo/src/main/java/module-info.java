@@ -4,6 +4,6 @@ module com.DiagramEditor {
     requires javafx.swing;
     requires com.google.gson;
     requires java.desktop;
-    opens QFox.diagrameditor.app to javafx.fxml;
-    exports QFox.diagrameditor.app;
+    opens qfox.diagrameditor.app to javafx.fxml;
+    exports qfox.diagrameditor.app;
 }
